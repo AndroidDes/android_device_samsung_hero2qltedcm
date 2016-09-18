@@ -1,4 +1,3 @@
-#
 # Copyright (C) 2016 The Dokdo Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-LOCAL_PATH := $(call my-dir)
+# For 64 bit
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
-ifneq ($(filter hero2ltexx,$(TARGET_DEVICE)),)
-include $(call all-subdir-makefiles,$(LOCAL_PATH))
-endif
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Inherit from hero2ltexx device
+$(call inherit-product, device/samsung/hero2ltexx/device.mk)
+
+# Set those variables here to overwrite the inherited values.
+PRODUCT_NAME := full_hero2ltexx
+PRODUCT_DEVICE := hero2ltexx
+PRODUCT_BRAND := samsung
+PRODUCT_MANUFACTURER := samsung
+PRODUCT_MODEL := hero2ltexx
